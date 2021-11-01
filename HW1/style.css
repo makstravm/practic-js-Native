@@ -1,0 +1,47 @@
+body {
+  font-size: 14px;
+  line-height: 20px;
+  background-color: #ececec;
+  color: #000;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.wrapper {
+  padding: 7% 3%;
+}
+.title {
+  text-align: center;
+  font-size: 2.2em;
+  line-height: 2em;
+}
+.today {
+  text-align: center;
+  margin-bottom: 1%;
+  font-size: 1.8em;
+  line-height: 1.8em;
+}
+.price__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 2%;
+}
+.price__number,
+.currency {
+  width: 150px;
+  padding: 5px;
+  text-align: center;
+  color: #000000;
+  background-color: transparent;
+}
+.currency {
+  width: 100px;
+  margin-left: 15px;
+}
+.price__result {
+  width:150px;
+  background-color: transparent;
+  text-align: center;
+  color: #ff0000;
+  font-size: 1.5em;
+  font-weight: bold;
+}
