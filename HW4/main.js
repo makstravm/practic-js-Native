@@ -218,3 +218,25 @@ console.log(arrCubNum);
   }
   document.write("</table>");
 }
+
+{
+  let arrResult = []
+  let w = 10
+  let h = 6;
+  let mid = Math.ceil((w / 2))
+  for (let i = 0; i < h; i++) {
+    let arr = []
+    let reversArr
+    for (let j = 0; j <= mid; j++) {
+      if (arr.length >= (mid - i)) {
+        arr += '#'
+      } else {
+        arr += '.'
+      }
+    }
+    reversArr = arr.split('').reverse().join('')
+    arrResult += (arr + reversArr.slice(1))
+    arrResult += '\n'
+  }
+  console.log(arrResult);
+}
