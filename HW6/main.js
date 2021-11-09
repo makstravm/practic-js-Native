@@ -28,21 +28,21 @@ function sum() {
 }
 
 
-// var sample = prompt("Введите название задания")
-// switch (sample.toLowerCase()) {
-//   case "a": a('Привет')
-//     break
-//   case "cube": cube(5)
-//     break
-//   case "avg2": avg2(10, 8)
-//     break
-//   case "intRandom": intRandom(5, 25)
-//     break
-//   case "greetAll": greetAll("Superman", "SpiderMan", "Captain Obvious")
-//     break
-//   case "sum": sum(10, 20, 40, 100)
-//     break
-// }
+var sample = prompt("Введите название задания")
+switch (sample.toLowerCase()) {
+  case "a": a('Привет')
+    break
+  case "cube": cube(5)
+    break
+  case "avg2": avg2(10, 8)
+    break
+  case "intRandom": intRandom(5, 25)
+    break
+  case "greetAll": greetAll("Superman", "SpiderMan", "Captain Obvious")
+    break
+  case "sum": sum(10, 20, 40, 100)
+    break
+}
 
 const objFunction = {
   a: a,
