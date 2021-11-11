@@ -1,0 +1,67 @@
+body {
+  max-width: 1200px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+table {
+  text-align: center;
+  border-spacing: 0;
+  font-size: 20px;
+  width: 50%;
+  margin: 0 auto;
+  height: 450px;
+  margin-bottom: 50px;
+}
+
+td,
+th {
+  border: 1px solid #000;
+}
+td {
+  cursor: pointer;
+}
+
+.th,
+.th .th {
+  background-color: rgba(48, 48, 48, 0.867);
+  color: rgb(72, 255, 0);
+  font-weight: 700;
+}
+.tdtd {
+  background-color: rgba(0, 255, 242, 0.582);
+  color: rgb(3, 3, 43);
+  font-weight: 500;
+}
+.tr-even {
+  background-color: rgba(233, 233, 233, 0.867);
+}
+.calc {
+  text-align: center;
+}
+.calc__inner input {
+  text-align: center;
+  font-size: 16px;
+  line-height: 30px;
+  margin-bottom: 20px;
+  border: none;
+  box-shadow: 0px 0px 14px 0px rgba(83, 19, 19, 0.25);
+}
+.btn__inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  margin: 0 10px;
+  box-shadow: 0px 0px 14px 0px rgba(83, 19, 19, 0.25);
+}
