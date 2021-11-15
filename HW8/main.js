@@ -4,53 +4,55 @@ for (let rowIndex = 0; rowIndex <= 10; rowIndex++) {
   rowIndex % 2 === 0 ? tr.className = "tr-odd" : tr.className = "tr-even"
   table.append(tr)
   if (rowIndex === 0) {
-    for (let k = 0; k <= 10; k++) {
+    for (let t = 0; t <= 10; t++) {
       let th = document.createElement('th')
       th.className = 'th'
-      th.append(k)
+      th.innerText = t
       tr.append(th)
     }
   } else {
     for (let colIndex = 0; colIndex <= 10; colIndex++) {
       let td = document.createElement('td')
-      td.onmouseover = function () {
-        let array = [...this.parentElement.parentElement.children]
+
+      // подсвечивает строку и столбец  до указаной клетки
+
+      function lightTd(e) {
+        let arrayParentChildren = [...this.parentElement.parentElement.children]
         for (let row = 0; row <= tr.rowIndex; row++) {
           for (let cell = 0; cell <= td.cellIndex; cell++) {
-            if (cell === td.cellIndex) {
-              [...array[row].children][cell].style.backgroundColor = '#fffbcc'
+            if (e.type === 'mousemove') {
+              if (cell === td.cellIndex) {
+                [...arrayParentChildren[row].children][cell].style.backgroundColor = '#9e90ff'
+              }
+              [...this.parentElement.children][cell].style.backgroundColor = '#9e90ff'
+              this.style.backgroundColor = 'red'
+            } else {
+              [...arrayParentChildren[row].children][cell].style.backgroundColor = ''
             }
-            [...this.parentElement.children][cell].style.backgroundColor = '#fffbcc'
-          }
-        }
-        this.style.backgroundColor = 'red'
-      }
-      td.onmouseout = function () {
-        this.style.backgroundColor = ''
-        let array = [...this.parentElement.parentElement.children]
-        for (let cell = 0; cell <= tr.rowIndex; cell++) {
-          for (let row = 0; row <= td.cellIndex; row++) {
-            [...array[cell].children][row].style.backgroundColor = ''
           }
         }
       }
+      td.onmousemove = lightTd
+      td.onmouseout = lightTd
+
       if (colIndex === 0) {
         let th = document.createElement('th')
         th.className = 'th'
-        th.append((rowIndex) * (colIndex + 1))
+        th.innerText = (rowIndex) * (colIndex + 1)
         tr.append(th)
       } else if (colIndex === rowIndex) {
         td.className = 'tdtd'
-        td.append((rowIndex) * (colIndex))
+        td.innerText = (rowIndex) * (colIndex)
         tr.append(td)
       } else {
-        td.append((rowIndex) * (colIndex))
+        td.innerText = (rowIndex) * (colIndex)
         tr.append(td)
       }
     }
   }
 }
 root.append(table)
+
 
 
 plus.addEventListener('click', () => {
