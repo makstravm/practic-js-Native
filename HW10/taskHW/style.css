@@ -1,0 +1,12 @@
+body {
+  font-size: 10px;
+  line-height: 10px;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.5s;
+}
+.container {
+  max-width: 1200px;
+  padding: 15px;
+  text-align: center;
+}
