@@ -73,7 +73,6 @@ psw.onChange = () => checkDisabled()
 function pswInputChange() {
   const pswInputDouble = document.createElement('input')
   psw.onOpenChange = (chek) => {
-    debugger
     if (!chek) {
       pswInputDouble.type = psw.setOpen()
       pswInputDouble.value = psw.getValue()
