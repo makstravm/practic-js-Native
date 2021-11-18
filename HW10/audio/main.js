@@ -84,6 +84,8 @@ green.onchange = setRGB
 const blue = new Control(containerRgb, { min: 0, max: 255, width: 100 })
 blue.onchange = setRGB
 
+
+
 // громкость звука
 const volume = new Control(volMus, {
   value: 1, min: 0, max: 1, width: 100, wheelSpeed: 0.001, step: 0.1
@@ -125,7 +127,6 @@ function regulatorPlayTrack() {
     let reDraw = function () {
       progressTrack.setValue((track.currentTime * 100) / track.duration)
       progressMus.children[0].innerText = `${progressTrack.getValue().toFixed(0)}%`
-      console.log(3);
     }
     // рандом боди при проигрывание
     let glyuk = function () {
