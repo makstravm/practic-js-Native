@@ -27,7 +27,7 @@ function reducer(state, { type, ГДЕ, ШО, СКОКА, БАБЛО }) { //об
       бухло: {
         пиво: { count: 100, price: 25 },
         святая: { count: 100, price: 35 },
-        ректифика: { count: 30, price: 50 },
+        ректификаn: { count: 30, price: 50 },
       },
       загрызнуть: {
         камса: { count: 80, price: 15 },
@@ -93,23 +93,15 @@ for (const key in store.getState()) {
   }
 }
 
+const findSelectedOption = (el) => el.options[el.selectedIndex].getAttribute('name')
+
 const купи = (ГДЕ, ШО, СКОКА, БАБЛО) => ({ type: 'КУПИТЬ', ГДЕ, ШО, СКОКА, БАБЛО })
 
 buy.onclick = () => {
-  store.dispatch(купи(findSelectedOption(goods, goods.value), goods.value, quantity.value, store.getState()[findSelectedOption(goods, goods.value)][goods.value].price * quantity.value))
+  store.dispatch(купи(findSelectedOption(goods), goods.value, quantity.value, store.getState()[findSelectedOption(goods)][goods.value].price * quantity.value))
 }
 
 const unsubscribe = store.subscribe(() => console.log(store.getState()))
-
-function findSelectedOption(el, selected) {
-  for (const key in [...el.children]) {
-    for (const deepKey in [...el.children][key].children) {
-      if (selected === [...el.children][key].children[deepKey].value) {
-        return [...el.children][key].children[deepKey].getAttribute('name')
-      }
-    }
-  }
-}
 
 function createTable(key, deepkey, flag) {
   table.setAttribute('border', '1')
@@ -121,7 +113,7 @@ function createTable(key, deepkey, flag) {
   flag ? th.innerText = key : th.innerText = ''
   tdName.innerText = deepkey
   tdPrice.innerText = `Цена ${store.getState()[key][deepkey].price} грн`
-  tdCount.innerText = `${store.getState()[key][deepkey].count} шт`
+  tdCount.innerText = ` ${store.getState()[key][deepkey].count} шт`
   store.subscribe(() => tdCount.innerText = store.getState()[key][deepkey].count)
   tr.append(th)
   tr.append(tdName)
