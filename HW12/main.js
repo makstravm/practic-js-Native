@@ -27,7 +27,7 @@ function reducer(state, { type, ГДЕ, ШО, СКОКА, БАБЛО }) { //об
       бухло: {
         пиво: { count: 100, price: 25 },
         святая: { count: 100, price: 35 },
-        ректификаn: { count: 30, price: 50 },
+        ректификат: { count: 30, price: 50 },
       },
       загрызнуть: {
         камса: { count: 80, price: 15 },
@@ -61,12 +61,23 @@ function reducer(state, { type, ГДЕ, ШО, СКОКА, БАБЛО }) { //об
         //и уменьшаем то, что покупается на количество
       }
     }
-    //если тип action - КУПИТЬ, то:
-    //проверить на:
-    //наличие товара как такового (есть ли ключ в объекте)
-    //количество денег в action
-    //наличие нужного количества товара.
-    //и только при соблюдении этих условий обновлять state. 
+  } else if (type === 'ЗАТАРИТЬ') {
+    if ((state[ГДЕ][ШО].count + СКОКА) <= 100 || (state.касса - БАБЛО) < 0) {
+      return state
+    } else {
+      return {
+        ...state, //берем все что было из ассортимента
+        [ГДЕ]: {
+          ...state[ГДЕ],
+          [ШО]: {
+            ...state[ГДЕ][ШО],
+            count: state[ГДЕ][ШО].count + +СКОКА
+          }
+        },
+        касса: state.касса - БАБЛО,
+        //и уменьшаем то, что покупается на количество
+      }
+    }
   }
   return state //если мы не поняли, что от нас просят в `action` - оставляем все как есть
 }
@@ -92,16 +103,6 @@ for (const key in store.getState()) {
     flag = true
   }
 }
-
-const findSelectedOption = (el) => el.options[el.selectedIndex].getAttribute('name')
-
-const купи = (ГДЕ, ШО, СКОКА, БАБЛО) => ({ type: 'КУПИТЬ', ГДЕ, ШО, СКОКА, БАБЛО })
-
-buy.onclick = () => {
-  store.dispatch(купи(findSelectedOption(goods), goods.value, quantity.value, store.getState()[findSelectedOption(goods)][goods.value].price * quantity.value))
-}
-
-const unsubscribe = store.subscribe(() => console.log(store.getState()))
 
 function createTable(key, deepkey, flag) {
   table.setAttribute('border', '1')
@@ -137,3 +138,18 @@ function createCasaCash(el, key) {
   tableCasa.append(tr)
   el.append(tableCasa)
 }
+
+const findSelectedOption = (el) => el.options[el.selectedIndex].getAttribute('name')
+
+const купи = (ГДЕ, ШО, СКОКА, БАБЛО) => ({ type: 'КУПИТЬ', ГДЕ, ШО, СКОКА, БАБЛО })
+const затарить = (ГДЕ, ШО, СКОКА, БАБЛО) => ({ type: 'ЗАТАРИТЬ', ГДЕ, ШО, СКОКА, БАБЛО })
+
+buy.onclick = () => {
+  store.dispatch(купи(findSelectedOption(goods), goods.value, quantity.value, store.getState()[findSelectedOption(goods)][goods.value].price * quantity.value))
+}
+buyShop.onclick = () => {
+  store.dispatch(затарить(findSelectedOption(goods), goods.value, quantity.value, store.getState()[findSelectedOption(goods)][goods.value].price * quantity.value))
+}
+
+const unsubscribe = store.subscribe(() => console.log(store.getState()))
+
