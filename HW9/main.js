@@ -64,7 +64,6 @@ function makeSaver(param) {
   let res;
   let flag = false;
   return function () {
-    debugger
     flag ? res : (flag = true, res = param());
   }
 };
@@ -93,23 +92,25 @@ console.log(value3 === value4);
 //myBind
 
 function myBind(f, method, arr) {
+  debugger
   return function (...params) {
+    debugger
     let countIndex = 0
     let newArr = arr.map(i => i !== undefined ? i : params[countIndex++])
     return f.apply(method, newArr)
   }
 }
 
-var pow5 = myBind(Math.pow, Math, [undefined, 5])
-pow5(2)
+// var pow5 = myBind(Math.pow, Math, [undefined, 5])
+// pow5(2)
 
-var cube = myBind(Math.pow, Math, [undefined, 3])
-cube(3)
+// var cube = myBind(Math.pow, Math, [undefined, 3])
+// cube(3)
 
-var chessMin = myBind(Math.min, Math, [undefined, 4, undefined, 5, undefined, 8, undefined, 9])
-chessMin(-1, -5, 3, 15)
+// var chessMin = myBind(Math.min, Math, [undefined, 4, undefined, 5, undefined, 8, undefined, 9])
+// chessMin(-1, -5, 3, 15)
 
-var zeroPrompt = myBind(prompt, window, [undefined, "0"]) 
-var someNumber = zeroPrompt("Введите число")
+// var zeroPrompt = myBind(prompt, window, [undefined, "0"]) 
+// var someNumber = zeroPrompt("Введите число")
 
 myBind((...params) => params.join(''), null, [undefined, 'b', undefined, undefined, 'e', 'f'])('a', 'c', 'd') === 'abcdef'
