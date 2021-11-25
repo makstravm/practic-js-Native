@@ -4,7 +4,6 @@ async function jsonPost(url, data) {
     body: JSON.stringify(data)
   })
   return await resp.json()
-
   // return new Promise((resolve, reject) => {
   //   var x = new XMLHttpRequest();
   //   x.onerror = () => reject(new Error('jsonPost failed'))
