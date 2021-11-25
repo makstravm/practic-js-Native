@@ -47,3 +47,29 @@ const reRenderTree = (el, link) => {
     .then(data => renderTree(el, data))
 }
 
+function myfetch(url) {
+  return new Promise(function (resolve, reject) {
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', url, true)
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState != 4) {
+        return;
+      }
+      if (xhr.status == 200) {
+        resolve(JSON.parse(xhr.responseText))
+      }
+      else {
+        reject(new Error('Error ' + xhr.status + ', ' + xhr.statusText))
+      }
+    }
+    xhr.send()
+  })
+}
+
+myfetch('https://swapi.dev/api/people/1/').then(luke => console.log(luke)).catch(e => console.log(e))
+
+
+const delay = ms => new Promise(ok => setTimeout(() => ok(ms), ms))
+
+let arr = Promise.race([delay(900), myfetch('https://swapi.dev/api/people/1/')])
+console.log(arr);
