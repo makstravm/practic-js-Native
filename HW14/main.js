@@ -65,7 +65,9 @@ async function sendAndCheck(nickName, message, nextMessageId) {
 
 btn.onclick = () => {
   nick.value === '' ? nick.classList.add('error') : message.value === '' ? message.classList.add('error') : sendAndCheck(nick.value, message.value, messageIdSave)
+  message.value = ''
 }
+
 
 nick.oninput = () => nick.classList.remove('error')
 message.oninput = () => message.classList.remove('error')
@@ -73,7 +75,7 @@ message.oninput = () => message.classList.remove('error')
 async function checkLoop() {
   const delay = ms => new Promise(ok => setTimeout(() => ok(ms), ms))
   while (true) {
-    await delay(2000)
+    await delay(3000)
     getMessages(messageIdSave)
   }
 }
