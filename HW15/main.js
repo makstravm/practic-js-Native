@@ -14,7 +14,6 @@ const getGQL = url =>
           return a[key][deepKey]
         }
       }
-      return a
     }
     catch (error) {
       console.log('Что-то не так, Бро ' + error);
