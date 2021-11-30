@@ -58,7 +58,8 @@
   border-radius: 5px;
   transition: all 0.3s;
 }
-.btn:disabled {
+.btn:disabled,
+.btn-light:disabled {
   background-color: #ececec;
   color: #000;
   opacity: 0.5;
