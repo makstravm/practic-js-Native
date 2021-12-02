@@ -1,23 +1,16 @@
 const getGQL = url =>
   async (query, variables) => {
-    try {
-      let obj = await fetch(url, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ query, variables })
-      })
-      let a = await obj.json()
-      for (const key in a) {
-        for (const deepKey in a[key]) {
-          return a[key][deepKey]
-        }
-      }
-    }
-    catch (error) {
-      console.log('Что-то не так, Бро ' + error);
-    }
+
+    let obj = await fetch(url, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ query, variables })
+    })
+    let obj = await obj.json()
+    if (!obj.data && obj.errors) throw new Error(JSON.stringify(obj.errors))
+    return obj.data[Object.keys(obj.data)[0]]
   }
 
 const gql = getGQL('http://shop-roles.asmer.fs.a-level.com.ua/graphql');
