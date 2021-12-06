@@ -119,7 +119,6 @@ store.subscribe(() => {
 
 window.onhashchange = () => {
     const [, route, _id] = location.hash.split('/')
-
     const routes = {
         category() {
             store.dispatch(actionCatById(_id))
