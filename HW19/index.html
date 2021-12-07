@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-ru">
+
+<html>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HW- 20</title>
+<link rel="stylesheet" href="style.css">
+<style>
+    .user__link {
+        display: inline-block;
+        margin: 0 10px 15px;
+    }
+
+    #mainContainer {
+        display: flex;
+    }
+
+    #main {
+        padding-top: 10px;
+    }
+
+    #aside {
+        width: 30%;
+        max-width: 300px;
+        margin-right: 5vw;
+    }
+
+    #aside>a {
+        display: block;
+    }
+</style>
+</head>
+
+<body id="body">
+    <div class="user__box">
+        <div id="user">
+        </div>
+    </div>
+    <header>
+        <a href="#">КУДА Я ПОПАЛ? Это типа ЛОГОТИП</a>
+        <div class="order-box">
+            <a href="#/dashboard" id="dashboardLink">
+                <img src="dashboard.png" alt="dashboard icon">
+            </a>
+            <a href="#/order" class="order">
+                <img src="order.png" alt="order icon">
+                <span id="countOrder" class="order-count">0</span>
+            </a>
+        </div>
+    </header>
+    <a class="catalog__link" href="#/category">Каталог</a>
+    <div id='mainContainer'>
+        <aside id='aside'>
+            Категории
+        </aside>
+        <main id='main'>
+            Контент
+        </main>
+        <!-- <div id='productCount'></div> -->
+    </div>
+    <div id="overlay"></div>
+    <script src="main.js"></script>
+</body>
+
+</html>

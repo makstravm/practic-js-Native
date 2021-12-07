@@ -169,7 +169,7 @@ const actionLogin = (login, password) =>
 const actionMyOrders = () =>
     actionPromise('orderGood', gql(`query Order{
                                         OrderGoodFind(query:"[{}]"){
-                                        good{ name _id } _id total price count
+                                        good{ name _id} _id total price count
                                     }
 }`, {}))
 
@@ -337,7 +337,7 @@ store.subscribe(() => {
     if (orderGood?.payload && route === 'order') {
         main.innerHTML = ''
         const table = document.createElement('table')
-        for (const { _id, good, price, count, total } of orderGood.payload) {
+        for (const { good, price, count, total } of orderGood.payload) {
             if (good !== null) {
 
                 const tr = document.createElement('tr')
