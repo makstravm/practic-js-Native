@@ -144,12 +144,16 @@ const actionOrder = () =>
     async (dispatch, getState) => {
         let { cart } = getState()
         const orderGoods = Object.entries(cart).map(([_id, { count }]) => ({ good: { _id }, count }))
-        await dispatch(actionPromise('order', gql(`
+        let result = await dispatch(actionPromise('order', gql(`
                     mutation newOrder($order:OrderInput){
                       OrderUpsert(order:$order)
                         { _id total }
                     }
             `, { order: { orderGoods } })))
+
+        if (result?._id) {
+            dispatch(actionCleanCart())
+        }
     }
 
 const actionPending = name => ({ type: 'PROMISE', status: 'PENDING', name })
@@ -191,7 +195,7 @@ const actionCatById = (_id) =>
 const actionGoodById = (_id) =>  //добавить подкатегории
     actionPromise('goodById', gql(`query goodByID($q: String) {
                                         GoodFind(query: $q){
-                                              name _id  description price images{url}
+                                            name _id  description price images{url}
                                         }
         }`, {
         q: JSON.stringify([{ _id }])
@@ -222,8 +226,8 @@ const actionRegister = (login, password) =>
                 mutation reg($login:String, $password:String){
                 UserUpsert(user:{
                     login:$login,
-                      password:$password,
-                      nick:$login}){
+                        password:$password,
+                        nick:$login}){
                 _id login
                 }
             }
@@ -364,7 +368,7 @@ function noAuthorization() {
 // страница заказа
 
 function renderOrder() {
-    const { cart } = store.getState()
+    const { cart, auth } = store.getState()
     const [, route, _id] = location.hash.split('/')
     main.innerHTML = ''
 
@@ -430,10 +434,9 @@ function renderOrder() {
         orderSentBtn.innerText = 'Заказать'
         orderSentBtn.classList.add('order-sent__btn')
 
-        if (localStorage.authToken) {
+        if (auth?.token) {
             orderSentBtn.onclick = () => {
                 store.dispatch(actionOrder())
-                store.dispatch(actionCleanCart)
                 main.innerText = ' Спасибо, заказ оформлен'
             }
 
