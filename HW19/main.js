@@ -255,6 +255,7 @@ const actionFullRegister = (login, password) =>
     async dispatch => {
         await actionRegister(login, password)
         let token = await dispatch(actionLogin(login, password))
+        debugger
         if (token) {
             dispatch(actionAuthLogin(token))
         }
@@ -647,9 +648,8 @@ store.subscribe(() => {
     const { sort } = store.getState().promise
     const [, route, _id] = location.hash.split('/')
     if (sort?.payload && route === 'search') {
-        main.innerHTML = `<h4>Бро, совпадений нет</h4>`
+        main.innerHTML = ``
         for (const { _id, name, price, images } of sort.payload) {
-            main.innerHTML = ''
             const product = document.createElement('div')
             product.classList.add('product')
             const btn = document.createElement('button')
