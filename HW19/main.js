@@ -173,6 +173,24 @@ const actionPromise = (name, promise) =>
         }
     }
 
+const actionSearchGoods = (value) =>
+    actionPromise('sort', gql(`query gf($query: String){
+                                    GoodFind(query: $query){
+                                        _id, name, description, price, images{
+                                            _id, url
+                                        }
+                                    }
+        }`, {
+        query: JSON.stringify([
+            {
+                $or: [{ title: value }, { description: value }] //регулярки пишутся в строках
+            },
+            {
+                sort: [{ title: 1 }]
+            } //сортируем по title алфавитно
+        ])
+    }))
+
 const actionRootCats = () =>
     actionPromise('rootCats', gql(`query {
             CategoryFind(query: "[{\\"parent\\":null}]"){
@@ -268,6 +286,8 @@ store.dispatch(actionRootCats())
 store.dispatch(actionGoodById())
 // store.dispatch(actionAuthLogin(token))
 // store.dispatch(actionPromise('delay2000', delay(1000)))
+
+
 
 window.onhashchange = () => {
     const [, route, _id] = location.hash.split('/')
@@ -504,7 +524,6 @@ store.subscribe(() => {
             product.append(btn)
             main.append(product)
         }
-
     }
 })
 
@@ -619,8 +638,39 @@ store.subscribe(() => {
 })
 
 
+search.oninput = () => {
+    location.hash = '#/search'
+    store.dispatch(actionSearchGoods('/' + search.value + '/'))
+}
+
+store.subscribe(() => {
+    const { sort } = store.getState().promise
+    const [, route, _id] = location.hash.split('/')
+    if (sort?.payload && route === 'search') {
+        main.innerHTML = `<h4>Бро, совпадений нет</h4>`
+        for (const { _id, name, price, images } of sort.payload) {
+            main.innerHTML = ''
+            const product = document.createElement('div')
+            product.classList.add('product')
+            const btn = document.createElement('button')
+            btn.innerText = '+'
+            let urlImage = images ? images[0].url : ''
+            product.innerHTML = `<a class="product-title__link" href="#/good/${_id}">${name}</a>
+                                 <div class="product__inner">
+                                    <img src="${backURL}/${urlImage}" />
+                                    <strong> ${price} $</strong>
+                                 </div > `
+            btn.onclick = () => store.dispatch(actionAddCart({ _id, name, price, images }, 1))
+            product.append(btn)
+            main.append(product)
+        }
+    }
+})
+
 console.log(store.getState());
 store.subscribe(() => console.log(store.getState()))
+
+
 
 
 // store.dispatch(actionPromise('', delay(1000)))
