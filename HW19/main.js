@@ -183,7 +183,7 @@ const actionSearchGoods = (value) =>
         }`, {
         query: JSON.stringify([
             {
-                $or: [{ title: value }, { description: value }] //регулярки пишутся в строках
+                $or: [{ title: value }, { name: value }, { description: value }] //регулярки пишутся в строках
             },
             {
                 sort: [{ title: 1 }]
@@ -476,7 +476,6 @@ function renderOrder() {
 store.dispatch(actionRootCats())
 store.dispatch(actionGoodById())
 
-
 // рисуем категории
 
 store.subscribe(() => {
@@ -666,6 +665,9 @@ store.subscribe(() => {
         }
     }
 })
+
+
+
 
 console.log(store.getState());
 store.subscribe(() => console.log(store.getState()))
