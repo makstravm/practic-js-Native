@@ -479,6 +479,11 @@ store.dispatch(actionGoodById())
 // рисуем категории
 
 store.subscribe(() => {
+    let a = Object.entries(store.getState().promise).map(t => t[1].status === 'PENDING')
+    let ss = el => el === true
+    a.some(ss) ? preLoader.style.display = 'block' : preLoader.style.display = 'none'
+})
+store.subscribe(() => {
     const { rootCats } = store.getState().promise
     if (rootCats?.payload) {
         aside.innerHTML = ''
@@ -648,6 +653,9 @@ store.subscribe(() => {
     const [, route, _id] = location.hash.split('/')
     if (sort?.payload && route === 'search') {
         main.innerHTML = ``
+        if (sort.payload.length === 0) {
+            main.innerHTML = `<strong>Совпадений нет!!!</strong>`
+        }
         for (const { _id, name, price, images } of sort.payload) {
             const product = document.createElement('div')
             product.classList.add('product')
