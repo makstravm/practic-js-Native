@@ -206,14 +206,32 @@ class Line extends Drawable {
     }
 
 
-    draw() {
+    draw(selected) {
         ctx.beginPath();
+        ctx.strokeStyle = this.color;
         ctx.moveTo(this.x, this.y);
         ctx.lineTo(this.x + this.width, this.y + this.height);
         ctx.closePath();
-        ctx.strokeStyle = this.color;
         ctx.lineWidth = this.lineWidth
+        if (selected) {
+            ctx.lineWidth = 2
+            ctx.strokeStyle = "greenyellow"
+            ctx.stroke();
+        }
         ctx.stroke();
+    }
+    in(x, y) {
+        let a = Drawable.instances.filter(t => {
+            ctx.beginPath();
+            ctx.lineWidth = t.lineWidth
+            ctx.moveTo(t.x, t.y);
+            ctx.lineTo(t.x + t.width, t.y + t.height);
+            if (ctx.isPointInStroke(x, y)) {
+                return t
+            }
+        })
+        let flag = a[0]?.x ? a[0]?.x : null
+        return this.x === flag
     }
 }
 
@@ -248,7 +266,6 @@ class Rectangle extends Drawable {
 
 class Ellipse extends Drawable {
     constructor(x, y, width, height, color) {
-
         super()
         this.x = x
         this.y = y
@@ -296,8 +313,10 @@ document.getElementById('delete').onclick = () => {
 ////canvas.onmousemove = function(e){
 ////}
 
-//undo.onclick = function(){
-    //Drawable.instances.pop()
-    ////Drawable.instances = []
-    //Drawable.drawAll()
-//}
+undo.onclick = function () {
+    Drawable.instances.pop()
+
+
+    console.log(Drawable.instances);
+    Drawable.drawAll()
+}
