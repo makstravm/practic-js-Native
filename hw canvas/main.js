@@ -209,10 +209,11 @@ class Line extends Drawable {
     draw(selected) {
         ctx.beginPath();
         ctx.strokeStyle = this.color;
+        ctx.lineWidth = this.lineWidth
         ctx.moveTo(this.x, this.y);
         ctx.lineTo(this.x + this.width, this.y + this.height);
         ctx.closePath();
-        ctx.lineWidth = this.lineWidth
+
         if (selected) {
             ctx.lineWidth = 2
             ctx.strokeStyle = "greenyellow"
@@ -221,17 +222,30 @@ class Line extends Drawable {
         ctx.stroke();
     }
     in(x, y) {
-        let a = Drawable.instances.filter(t => {
-            ctx.beginPath();
-            ctx.lineWidth = t.lineWidth
-            ctx.moveTo(t.x, t.y);
-            ctx.lineTo(t.x + t.width, t.y + t.height);
-            if (ctx.isPointInStroke(x, y)) {
-                return t
-            }
-        })
-        let flag = a[0]?.x ? a[0]?.x : null
-        return this.x === flag
+        // let a = Drawable.instances.filter(t => {
+        //     ctx.beginPath();
+        //     ctx.lineWidth = t.lineWidth
+        //     ctx.moveTo(t.x, t.y);
+        //     ctx.lineTo(t.x + t.width, t.y + t.height);
+        //     if (ctx.isPointInStroke(x, y)) {
+        //         return t
+        //     }
+        // })
+        // let flag = a[0]?.x ? a[0]?.x : null
+        // return this.x === flag
+
+        let radLine = Math.atan2(this.height, this.width)
+        let radClick = (Math.atan2((y - this.y), (x - this.x)))
+
+        let distanceLine = distance(0, 0, this.width, this.height)
+        let distanceClick = distance(this.x, this.y, x, y)
+
+        let res = radClick - radLine
+
+        let resX = Math.cos(res) * distanceClick
+        let resY = Math.sin(res) * distanceClick
+
+        return resX >= 0 && resX <= distanceLine && resY >= (-this.lineWidth / 2) && resY <= (this.lineWidth / 2)
     }
 }
 
